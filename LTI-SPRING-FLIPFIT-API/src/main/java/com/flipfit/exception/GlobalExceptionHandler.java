@@ -57,10 +57,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    // ==== Updated for GymUserServiceImpl ====
+
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handleUserExists(UserAlreadyExistsException ex, HttpServletRequest request) {
         ErrorResponse error = new ErrorResponse(LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.CONFLICT.value(),          // changed to match response status
                 ex.getMessage(),
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
@@ -69,7 +71,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex, HttpServletRequest request) {
         ErrorResponse error = new ErrorResponse(LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.value(),          // changed to match response status
                 ex.getMessage(),
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
@@ -79,7 +81,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleInvalidCreds(InvalidCredentialsException ex,
                                                             HttpServletRequest request) {
         ErrorResponse error = new ErrorResponse(LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.UNAUTHORIZED.value(),       // changed to match response status
                 ex.getMessage(),
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
@@ -88,12 +90,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorResponse> handleBadRequest(BadRequestException ex, HttpServletRequest request) {
         ErrorResponse error = new ErrorResponse(LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.BAD_REQUEST.value(),        // changed to match response status
                 ex.getMessage(),
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    // ========================================
 
     @ExceptionHandler(WaitListNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleWaitListNotFound(WaitListNotFoundException ex,
