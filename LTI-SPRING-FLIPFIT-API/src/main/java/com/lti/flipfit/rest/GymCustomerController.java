@@ -2,41 +2,41 @@ package com.lti.flipfit.rest;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.lti.flipfit.beans.Booking;
-import com.lti.flipfit.beans.GymSlot;
-
+import com.lti.flipfit.services.GymCustomerService;
+/**
+ * @author Mayuresh Arvind Gujar
+ */
 @RestController
-@RequestMapping("/api/gymcustomer")
+@RequestMapping("/api/v1")
 public class GymCustomerController {
-	
-	@GetMapping("/bookings")
-	public List<Booking> viewBookings(){
-		return null;
-		
-	}
-	
-	@PostMapping("/cancel/{bookingId}")
-	public Booking cancelBooking(@PathVariable Long bookingId) {
-		return null;
-		
-	}
-	
-	@GetMapping("/booking/{bookingId}")
-	public Booking getBookingDetails(@PathVariable Long bookingId) {
-		return null;
-		
-	}
-	
-	@GetMapping("/gymSlots")
-	public GymSlot bookSlot() {
-		return null;
-		
-	}
 
+    private final GymCustomerService gymCustomerService;
+
+    public GymCustomerController(GymCustomerService gymCustomerService) {
+        this.gymCustomerService = gymCustomerService;
+    }
+
+    @GetMapping("/bookings")
+    public ResponseEntity<List<Booking>> viewBookings() {
+        return ResponseEntity.ok(gymCustomerService.viewBookings());
+    }
+
+    @PostMapping("/cancel/{bookingId}")
+    public ResponseEntity<Booking> cancelBooking(@PathVariable Long bookingId) {
+        return ResponseEntity.ok(gymCustomerService.cancelBooking(bookingId));
+    }
+
+    @GetMapping("/booking/{bookingId}")
+    public ResponseEntity<Booking> getBookingDetails(@PathVariable Long bookingId) {
+        return ResponseEntity.ok(gymCustomerService.getBookingDetails(bookingId));
+    }
+
+    @PostMapping("/book/slot")
+    public ResponseEntity<Booking> bookSlot(@RequestBody Booking booking) {
+        return ResponseEntity.ok(gymCustomerService.bookSlot(booking));
+    }
 }

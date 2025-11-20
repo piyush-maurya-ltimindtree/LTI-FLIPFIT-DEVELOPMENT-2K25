@@ -2,58 +2,76 @@ package com.lti.flipfit.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
 
 import com.lti.flipfit.beans.Booking;
-import com.lti.flipfit.beans.GymSlot;
-
+import com.lti.flipfit.exception.BookingNotFoundException;
+import com.lti.flipfit.exception.BookingOperationException;
+/**
+ * @author Mayuresh Arvind Gujar
+ */
 @Service
 public class GymCustomerServiceImpl implements GymCustomerService {
-	List<Booking> bookings = new ArrayList<>();
+    private final List<Booking> bookings = new ArrayList<>();
 
-	public GymCustomerServiceImpl() {
-		bookings.add(new Booking(Long.valueOf(1), Long.valueOf(1), Long.valueOf(1), "Successful"));
-		bookings.add(new Booking(Long.valueOf(2), Long.valueOf(2), Long.valueOf(2), "Successful"));
-		bookings.add(new Booking(Long.valueOf(3), Long.valueOf(3), Long.valueOf(3), "Successful"));
-		bookings.add(new Booking(Long.valueOf(4), Long.valueOf(4), Long.valueOf(4), "Cancelled"));
-		bookings.add(new Booking(Long.valueOf(5), Long.valueOf(5), Long.valueOf(5), "Successful"));
-	}
+    public GymCustomerServiceImpl() {
+        bookings.add(new Booking(1L, 1L, 1L, "Successful"));
+        bookings.add(new Booking(2L, 2L, 2L, "Successful"));
+        bookings.add(new Booking(3L, 3L, 3L, "Successful"));
+        bookings.add(new Booking(4L, 4L, 4L, "Cancelled"));
+        bookings.add(new Booking(5L, 5L, 5L, "Successful"));
+    }
 
-	@Override
-	public List<Booking> viewBookings() {
-		return bookings;
-	}
+    @Override
+    public List<Booking> viewBookings() {
+        return bookings;
+    }
 
-	@Override
-	public Booking cancelBooking(Long bookingId) {
-		if (bookingId == null) {
-			throw new IllegalArgumentException("bookingId must not be null");
-		}
+    @Override
+    public Booking cancelBooking(Long bookingId) {
+        if (bookingId == null) {
+            throw new IllegalArgumentException("bookingId must not be null");
+        }
 
-		Booking booking = bookings.stream().filter(b -> bookingId.equals(b.getBookingId())).findAny()
-				.orElseThrow(() -> new NoSuchElementException("No booking found for id: " + bookingId));
+        Booking booking = bookings.stream()
+                .filter(b -> bookingId.equals(b.getBookingId()))
+                .findAny()
+                .orElseThrow(() -> new BookingNotFoundException(bookingId));
 
-		booking.setStatus("Cancelled");
-		return booking;
-	}
+        if ("Cancelled".equalsIgnoreCase(booking.getStatus())) {
+            throw new BookingOperationException("Booking " + bookingId + " is already cancelled.");
+        }
 
-	@Override
-	public Booking getBookingDetails(Long bookingId) {
-		if (bookingId == null) {
-			throw new IllegalArgumentException("bookingId must not be null");
-		}
+        booking.setStatus("Cancelled");
+        return booking;
+    }
 
-		Booking booking = bookings.stream().filter(b -> bookingId.equals(b.getBookingId())).findAny()
-				.orElseThrow(() -> new NoSuchElementException("No booking found for id: " + bookingId));
-		return booking;
-	}
+    @Override
+    public Booking getBookingDetails(Long bookingId) {
+        if (bookingId == null) {
+            throw new IllegalArgumentException("bookingId must not be null");
+        }
 
-	@Override
-	public Booking bookSlot(Booking booking) {
-		bookings.add(booking);
-		return booking;
-	}
+        return bookings.stream()
+                .filter(b -> bookingId.equals(b.getBookingId()))
+                .findAny()
+                .orElseThrow(() -> new BookingNotFoundException(bookingId));
+    }
 
+    @Override
+    public Booking bookSlot(Booking booking) {
+        if (booking == null) {
+            throw new IllegalArgumentException("booking must not be null");
+        }
+
+        boolean exists = bookings.stream()
+                .anyMatch(b -> b.getBookingId() != null && b.getBookingId().equals(booking.getBookingId()));
+        if (exists) {
+            throw new BookingOperationException("Booking with id " + booking.getBookingId() + " already exists.");
+        }
+
+        bookings.add(booking);
+        return booking;
+    }
 }

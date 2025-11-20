@@ -1,5 +1,8 @@
 package com.lti.flipfit.beans;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class GymCustomer extends GymUser{
 
 	private Long gymCustomerId;
