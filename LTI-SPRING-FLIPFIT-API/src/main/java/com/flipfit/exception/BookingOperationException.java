@@ -1,4 +1,4 @@
-package com.lti.flipfit.exception;
+package com.flipfit.exception;
 /**
  * @author Mayuresh Arvind Gujar
  */

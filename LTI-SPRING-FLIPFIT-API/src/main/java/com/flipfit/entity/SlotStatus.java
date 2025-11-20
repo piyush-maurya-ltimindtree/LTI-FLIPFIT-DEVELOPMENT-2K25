@@ -1,4 +1,4 @@
-package com.lti.app.entity;
+package com.flipfit.entity;
 
 public enum SlotStatus {
     OPEN,

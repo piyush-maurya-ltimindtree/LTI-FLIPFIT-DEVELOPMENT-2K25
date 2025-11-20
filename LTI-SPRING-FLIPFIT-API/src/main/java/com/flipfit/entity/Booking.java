@@ -1,4 +1,4 @@
-package com.lti.app.entity;
+package com.flipfit.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

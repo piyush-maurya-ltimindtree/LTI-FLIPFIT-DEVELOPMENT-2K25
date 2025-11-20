@@ -1,4 +1,4 @@
-package com.lti.flipfit.services;
+package com.flipfit.service;
 
 import org.springframework.stereotype.Service;
 

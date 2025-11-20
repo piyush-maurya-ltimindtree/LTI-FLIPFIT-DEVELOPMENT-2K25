@@ -1,6 +1,8 @@
-package com.lti.flipfit.services;
+package com.flipfit.service;
 
-import com.lti.flipfit.beans.GymUser;
+
+import com.flipfit.entity.GymUser;
+
 /**
  * @author Mayuresh Arvind Gujar
  */

@@ -1,4 +1,4 @@
-package com.lti.app.exception;
+package com.flipfit.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.lti.app.dto;
+package com.flipfit.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

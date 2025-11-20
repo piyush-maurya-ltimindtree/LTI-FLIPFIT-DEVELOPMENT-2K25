@@ -1,4 +1,4 @@
-package com.lti.flipfit.services;
+package com.flipfit.service;
 
 public interface PaymentService {
 	

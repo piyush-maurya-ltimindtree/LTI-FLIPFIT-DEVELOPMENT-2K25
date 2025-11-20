@@ -1,12 +1,12 @@
-package com.lti.flipfit.rest;
+package com.flipfit.controller;
 
 import java.util.List;
 
+import com.flipfit.entity.GymCenter;
+import com.flipfit.entity.GymSlot;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lti.flipfit.beans.GymCenter;
-import com.lti.flipfit.beans.GymSlot;
 
 @RestController
 @RequestMapping("/api/gymcenter")

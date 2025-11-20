@@ -1,7 +1,9 @@
-package com.lti.app.services;
+package com.flipfit.service;
 
 
-import com.lti.app.dto.*;
+
+
+import com.flipfit.dto.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

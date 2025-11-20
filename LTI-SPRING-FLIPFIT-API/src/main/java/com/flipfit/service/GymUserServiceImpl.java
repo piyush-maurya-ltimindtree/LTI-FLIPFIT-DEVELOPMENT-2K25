@@ -1,16 +1,18 @@
-package com.lti.flipfit.services;
+package com.flipfit.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.flipfit.entity.GymUser;
+
+import com.flipfit.exception.BadRequestException;
+import com.flipfit.exception.InvalidCredentialsException;
+import com.flipfit.exception.UserAlreadyExistsException;
+import com.flipfit.exception.UserNotFoundException;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.lti.flipfit.beans.GymUser;
-import com.lti.flipfit.exception.BadRequestException;
-import com.lti.flipfit.exception.InvalidCredentialsException;
-import com.lti.flipfit.exception.UserAlreadyExistsException;
-import com.lti.flipfit.exception.UserNotFoundException;
+
 /**
  * @author Mayuresh Arvind Gujar
  */
@@ -18,7 +20,7 @@ import com.lti.flipfit.exception.UserNotFoundException;
 public class GymUserServiceImpl implements GymUserService {
 
     private final List<GymUser> users = new ArrayList<>();
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    //private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public Boolean login(GymUser gymUser) {
@@ -37,10 +39,10 @@ public class GymUserServiceImpl implements GymUserService {
                 .findFirst()
                 .orElseThrow(() -> new UserNotFoundException(gymUser.getUserName()));
 
-        boolean matches = passwordEncoder.matches(gymUser.getUserPassword(), stored.getUserPassword());
+        /*boolean matches = passwordEncoder.matches(gymUser.getUserPassword(), stored.getUserPassword());
         if (!matches) {
             throw new InvalidCredentialsException();
-        }
+        }*/
         return true;
     }
 
@@ -62,7 +64,7 @@ public class GymUserServiceImpl implements GymUserService {
             throw new UserAlreadyExistsException(gymUser.getUserName());
         }
 
-        gymUser.setUserPassword(passwordEncoder.encode(gymUser.getUserPassword()));
+        //gymUser.setUserPassword(passwordEncoder.encode(gymUser.getUserPassword()));
         users.add(gymUser);
     }
 }

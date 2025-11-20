@@ -1,12 +1,13 @@
-package com.lti.flipfit.services;
+package com.flipfit.service;
 
 import java.util.List;
 
+import com.flipfit.entity.Booking;
+import com.flipfit.entity.GymCenter;
+import com.flipfit.entity.GymSlot;
 import org.springframework.stereotype.Service;
 
-import com.lti.flipfit.beans.Booking;
-import com.lti.flipfit.beans.GymCenter;
-import com.lti.flipfit.beans.GymSlot;
+
 
 
 @Service

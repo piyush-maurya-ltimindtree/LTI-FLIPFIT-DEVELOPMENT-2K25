@@ -1,6 +1,7 @@
-package com.lti.flipfit.services;
+package com.flipfit.service;
 
-import com.lti.flipfit.beans.GymScheduler;
+
+import com.flipfit.entity.GymScheduler;
 
 public interface SchedulerService {
 	

@@ -1,4 +1,4 @@
-package com.lti.flipfit.beans;
+package com.flipfit.entity;
 
 import java.util.List;
 

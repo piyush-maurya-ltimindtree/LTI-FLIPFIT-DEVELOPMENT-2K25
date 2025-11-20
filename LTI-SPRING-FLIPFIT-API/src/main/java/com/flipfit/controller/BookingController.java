@@ -1,8 +1,9 @@
-package com.lti.app.controller;
+package com.flipfit.controller;
 
 
-import com.lti.app.dto.*;
-import com.lti.app.services.BookingService;
+
+import com.flipfit.dto.*;
+import com.flipfit.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;

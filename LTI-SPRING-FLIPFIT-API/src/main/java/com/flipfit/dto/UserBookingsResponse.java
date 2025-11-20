@@ -1,6 +1,7 @@
-package com.lti.app.dto;
+package com.flipfit.dto;
 
-import com.lti.app.entity.Booking;
+
+import com.flipfit.entity.Booking;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

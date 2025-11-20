@@ -1,9 +1,10 @@
-package com.lti.flipfit.services;
+package com.flipfit.service;
+
+import com.flipfit.entity.GymCenter;
+import com.flipfit.entity.GymOwner;
 
 import java.util.List;
 
-import com.lti.flipfit.beans.GymCenter;
-import com.lti.flipfit.beans.GymOwner;
 
 public interface GymAdminService {
 	

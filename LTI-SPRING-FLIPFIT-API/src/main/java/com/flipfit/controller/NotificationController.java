@@ -1,7 +1,8 @@
-package com.lti.flipfit.rest;
+package com.flipfit.controller;
  
-import com.lti.flipfit.beans.Notification;
-import com.lti.flipfit.services.NotificationService;
+
+import com.flipfit.entity.Notification;
+import com.flipfit.service.NotificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

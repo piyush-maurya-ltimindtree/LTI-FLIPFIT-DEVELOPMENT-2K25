@@ -1,11 +1,12 @@
-package com.lti.flipfit.services;
+package com.flipfit.service;
 
 import java.util.List;
 
+import com.flipfit.entity.GymCenter;
+import com.flipfit.entity.GymOwner;
 import org.springframework.stereotype.Service;
 
-import com.lti.flipfit.beans.GymCenter;
-import com.lti.flipfit.beans.GymOwner;
+
 
 @Service
 public class GymAdminServiceImpl implements GymAdminService {

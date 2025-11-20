@@ -1,9 +1,10 @@
-package com.lti.flipfit.rest;
+package com.flipfit.controller;
 
+import com.flipfit.entity.GymScheduler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lti.flipfit.beans.GymScheduler;
+
 
 @RestController
 @RequestMapping("/api/scheduler")

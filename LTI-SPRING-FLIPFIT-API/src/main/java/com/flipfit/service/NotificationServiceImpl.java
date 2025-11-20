@@ -1,11 +1,13 @@
 
-package com.lti.flipfit.services;
+package com.flipfit.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import com.flipfit.entity.Notification;
 import org.springframework.stereotype.Service;
-import com.lti.flipfit.beans.Notification;
+
 
 @Service
 public class NotificationServiceImpl implements NotificationService {

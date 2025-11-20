@@ -1,11 +1,10 @@
+package com.flipfit.controller;
 
-package com.lti.flipfit.rest;
-
+import com.flipfit.entity.GymUser;
+import com.flipfit.service.WaitListService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.lti.flipfit.beans.GymUser;
-import com.lti.flipfit.services.WaitListService;
 
 @RestController
 @RequestMapping("/api/waitlist")

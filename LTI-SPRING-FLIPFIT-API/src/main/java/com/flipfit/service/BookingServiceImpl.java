@@ -1,12 +1,16 @@
-package com.lti.app.services;
+package com.flipfit.service;
 
 
-import com.lti.app.dto.*;
-import com.lti.app.entity.*;
-import com.lti.app.exception.BookingNotFoundException;
-import com.lti.app.exception.SlotNotFoundException;
-import com.lti.app.repository.BookingRepository;
-import com.lti.app.repository.SlotRepository;
+
+import com.flipfit.dto.*;
+import com.flipfit.entity.Booking;
+import com.flipfit.entity.BookingStatus;
+import com.flipfit.entity.Slot;
+import com.flipfit.entity.SlotStatus;
+import com.flipfit.exception.BookingNotFoundException;
+import com.flipfit.exception.SlotNotFoundException;
+import com.flipfit.repository.BookingRepository;
+import com.flipfit.repository.SlotRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.lti.app.exception;
+package com.flipfit.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

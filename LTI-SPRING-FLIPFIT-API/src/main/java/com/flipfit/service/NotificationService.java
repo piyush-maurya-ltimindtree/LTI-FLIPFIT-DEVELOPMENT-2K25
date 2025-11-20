@@ -1,5 +1,7 @@
-package com.lti.flipfit.services;
-import com.lti.flipfit.beans.Notification;
+package com.flipfit.service;
+
+import com.flipfit.entity.Notification;
+
 import java.util.List;
 
 public interface NotificationService {

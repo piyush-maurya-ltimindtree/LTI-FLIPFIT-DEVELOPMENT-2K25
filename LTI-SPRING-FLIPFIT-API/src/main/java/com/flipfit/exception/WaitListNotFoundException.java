@@ -1,5 +1,4 @@
-
-package com.lti.flipfit.exception;
+package com.flipfit.exception;
 
 public class WaitListNotFoundException extends RuntimeException {
 

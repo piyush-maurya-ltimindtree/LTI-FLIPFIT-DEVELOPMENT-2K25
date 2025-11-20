@@ -1,6 +1,7 @@
-package com.lti.app.repository;
+package com.flipfit.repository;
 
-import com.lti.app.entity.Slot;
+
+import com.flipfit.entity.Slot;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;

@@ -1,7 +1,8 @@
-package com.lti.app.repository;
+package com.flipfit.repository;
 
 
-import com.lti.app.entity.Booking;
+
+import com.flipfit.entity.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

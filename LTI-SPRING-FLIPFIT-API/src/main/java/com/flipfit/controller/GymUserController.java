@@ -1,10 +1,11 @@
-package com.lti.flipfit.rest;
+package com.flipfit.controller;
 
+import com.flipfit.entity.GymUser;
+import com.flipfit.service.GymUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.lti.flipfit.beans.GymUser;
-import com.lti.flipfit.services.GymUserService;
+
 /**
  * @author Mayuresh Arvind Gujar
  */

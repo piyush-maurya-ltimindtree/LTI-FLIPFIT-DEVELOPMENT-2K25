@@ -1,4 +1,4 @@
-package com.lti.app.exception;
+package com.flipfit.exception;
 
 public class BookingNotFoundException extends RuntimeException{
 

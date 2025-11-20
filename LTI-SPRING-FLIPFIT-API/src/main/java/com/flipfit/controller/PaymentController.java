@@ -1,4 +1,4 @@
-package com.lti.flipfit.rest;
+package com.flipfit.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

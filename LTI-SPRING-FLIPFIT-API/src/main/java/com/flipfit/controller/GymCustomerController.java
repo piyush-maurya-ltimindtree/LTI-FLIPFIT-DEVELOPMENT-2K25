@@ -1,12 +1,12 @@
-package com.lti.flipfit.rest;
+package com.flipfit.controller;
 
 import java.util.List;
 
+import com.flipfit.entity.Booking;
+import com.flipfit.service.GymCustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.lti.flipfit.beans.Booking;
-import com.lti.flipfit.services.GymCustomerService;
 /**
  * @author Mayuresh Arvind Gujar
  */
