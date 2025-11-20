@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.lti.flipfit.exceptions.WaitListNotFoundException;
+
 import jakarta.servlet.http.HttpServletRequest;
 /**
  * @author Mayuresh Arvind Gujar
@@ -72,4 +74,18 @@ public class GlobalExceptionHandler {
 				HttpStatus.BAD_REQUEST.getReasonPhrase(), ex.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
+	
+
+    @ExceptionHandler(WaitListNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleWaitListNotFound(WaitListNotFoundException ex,
+                                                            HttpServletRequest request) {
+    ErrorResponse error = new ErrorResponse(
+            HttpStatus.NOT_FOUND.value(),
+            HttpStatus.NOT_FOUND.getReasonPhrase(),
+            ex.getMessage(),
+            request.getRequestURI()
+    );
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+}
+
 }
