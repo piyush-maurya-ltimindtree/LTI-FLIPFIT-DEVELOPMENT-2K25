@@ -3,26 +3,27 @@ spring:
     name: LTI-FlipFit-SpringMicroservices-API
 
   datasource:
-    url: jdbc:h2:mem:flipfitdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://localhost:3306/flipfitschema?useSSL=false&serverTimezone=UTC
+    username: root
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-    database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true   # <-- IMPORTANT
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+
 
   sql:
     init:
       mode: always    # <-- IMPORTANT
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
 
 server:
   port: 8080
