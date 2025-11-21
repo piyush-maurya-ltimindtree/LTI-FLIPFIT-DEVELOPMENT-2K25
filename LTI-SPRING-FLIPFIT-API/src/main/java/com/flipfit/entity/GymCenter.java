@@ -4,14 +4,14 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.List;
+/**
+ * Class: GymCenter
+ * Author: Ankam Bhavana
+ * Created on: 21-11-2025
+ */
 
 @Entity
-@Table(
-        uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"gym_center_id", "gym_owner_id"})
-        }
-)
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"gym_center_id", "gym_owner_id"})})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
