@@ -1,35 +1,34 @@
 package com.flipfit.entity;
 
-public class Notification {
-	
-	private Long notificationId;
-	private Long userId;
-	private String message;
-	private String status;
-	
-	public Long getNotificationId() {
-		return notificationId;
-	}
-	public void setNotificationId(Long notificationId) {
-		this.notificationId = notificationId;
-	}
-	public Long getUserId() {
-		return userId;
-	}
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
+import jakarta.persistence.*;
+import lombok.*;
 
+@Entity
+@Table(name = "notification")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Notification {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "notification_id")
+    private Long notificationId;
+
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
+    @Column(name = "message", nullable = false)
+    private String message;
+
+    @Column(name = "status", nullable = false)
+    private String status;
+
+	public String getNotificationId() {
+		// TODO Auto-generated method stub
+		return null;
+	} 
+
+	
 }
