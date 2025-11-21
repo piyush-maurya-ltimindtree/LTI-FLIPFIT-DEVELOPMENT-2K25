@@ -3,9 +3,9 @@ spring:
     name: LTI-FlipFit-SpringMicroservices-API
 
   datasource:
-    url: jdbc:mysql://localhost:3306/flipfitschema?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/flipfit?useSSL=false&serverTimezone=UTC
     username: root
-    password: admin
+    password: Daddy#204
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 

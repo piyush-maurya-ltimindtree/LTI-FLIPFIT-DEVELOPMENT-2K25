@@ -1,39 +1,46 @@
 package com.flipfit.controller;
 
+import com.flipfit.dto.GymCenterRequest;
+import com.flipfit.dto.GymCenterResponse;
+import com.flipfit.dto.GymSlotResponse;
+import com.flipfit.service.GymCenterService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
-import com.flipfit.entity.GymCenter;
-import com.flipfit.entity.GymSlot;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-
 @RestController
-@RequestMapping("/api/gymcenter")
+@RequestMapping("/api/gymcenters")
+@RequiredArgsConstructor
 public class GymCenterController {
-	
-	
-	public List<GymSlot> getSlots() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	
-	public Boolean getAvailability() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    private final GymCenterService gymCenterService;
 
-	
-	public GymCenter getGymCenterByCity(String city) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @GetMapping("/{centerId}/slots")
+    public ResponseEntity<List<GymSlotResponse>> getSlots(@PathVariable Long centerId) {
+        return ResponseEntity.ok(gymCenterService.getSlots(centerId));
+    }
 
-	
-	public Boolean requestGymCenterApproval(Long gymCenterId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @GetMapping("/{centerId}/availability")
+    public ResponseEntity<Boolean> checkAvailability(@PathVariable Long centerId,
+                                                     @RequestParam String date,
+                                                     @RequestParam String startTime) {
+        return ResponseEntity.ok(gymCenterService.checkAvailability(centerId, date, startTime));
+    }
 
+    @GetMapping("/city")
+    public ResponseEntity<List<GymCenterResponse>> getCentersByCity(@RequestParam String city) {
+        return ResponseEntity.ok(gymCenterService.getGymCentersByCity(city));
+    }
+
+    @PutMapping("/{centerId}/request-approval")
+    public ResponseEntity<Boolean> requestApproval(@PathVariable Long centerId) {
+        return ResponseEntity.ok(gymCenterService.requestApproval(centerId));
+    }
+
+    @PostMapping
+    public ResponseEntity<GymCenterResponse> createGymCenter(@RequestBody GymCenterRequest request) {
+        return ResponseEntity.ok(gymCenterService.createGymCenter(request));
+    }
 }

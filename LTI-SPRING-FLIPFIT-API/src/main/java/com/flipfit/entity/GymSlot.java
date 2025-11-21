@@ -1,53 +1,29 @@
 package com.flipfit.entity;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+@Entity
+@Table(name = "gymslot")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class GymSlot {
-	
-	private Long slotId;
-	private Long gymCenterId;
-	private LocalDateTime startDateTime;
-	private LocalDateTime endDateTime;
-	private Integer capacity;
-	private Integer availableSeats;
-	
-	public Long getSlotId() {
-		return slotId;
-	}
-	public void setSlotId(Long slotId) {
-		this.slotId = slotId;
-	}
-	public Long getGymCenterId() {
-		return gymCenterId;
-	}
-	public void setGymCenterId(Long gymCenterId) {
-		this.gymCenterId = gymCenterId;
-	}
-	public LocalDateTime getStartDateTime() {
-		return startDateTime;
-	}
-	public void setStartDateTime(LocalDateTime startDateTime) {
-		this.startDateTime = startDateTime;
-	}
-	public LocalDateTime getEndDateTime() {
-		return endDateTime;
-	}
-	public void setEndDateTime(LocalDateTime endDateTime) {
-		this.endDateTime = endDateTime;
-	}
-	public Integer getCapacity() {
-		return capacity;
-	}
-	public void setCapacity(Integer capacity) {
-		this.capacity = capacity;
-	}
-	public Integer getAvailableSeats() {
-		return availableSeats;
-	}
-	public void setAvailableSeats(Integer availableSeats) {
-		this.availableSeats = availableSeats;
-	}
-	
-	
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private Boolean available;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gym_center_id")
+    private GymCenter gymCenter;
 }
