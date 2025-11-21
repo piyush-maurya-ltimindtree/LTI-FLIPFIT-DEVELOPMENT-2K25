@@ -12,6 +12,15 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+
+
+
+
+/**
+ * Class: BookingController
+ * Author: Piyush Kumar Maurya
+ * Created on: 21-11-2025
+ */
 @RestController
 @RequestMapping("/api/bookings")
 @RequiredArgsConstructor
@@ -19,6 +28,11 @@ public class BookingController {
 
     private final BookingService bookingService;
 
+    /**
+     * Method: bookSlot
+     * Author: Piyush Kumar Maurya
+     * Created on: 21-11-2025
+     */
 
     @PostMapping
     public ResponseEntity<BookingResponse> bookSlot(@RequestBody BookingRequest request) {

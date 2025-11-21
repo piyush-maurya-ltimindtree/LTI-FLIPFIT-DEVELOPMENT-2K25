@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/flipfit?useSSL=false&serverTimezone=UTC
     username: root
-    password: Daddy#204
+    password: admin
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 

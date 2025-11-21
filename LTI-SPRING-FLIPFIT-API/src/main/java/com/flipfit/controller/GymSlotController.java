@@ -2,20 +2,36 @@ package com.flipfit.controller;
 
 import java.util.List;
 
+import com.flipfit.dto.CreateGymSlotRequest;
+import com.flipfit.dto.GymSlotRequest;
 import com.flipfit.entity.GymSlot;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.flipfit.entity.GymSlotStatus;
+import com.flipfit.service.GymSlotService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/gymslot")
+@RequestMapping("/api/gymslots")
+@RequiredArgsConstructor
 public class GymSlotController {
 
-	
-	public List<GymSlot> getSlots() {
-		// TODO Auto-generated method stub
-		return null;
+	private final GymSlotService gymSlotService;
+
+	@GetMapping
+	public ResponseEntity<GymSlot> getSlots(@RequestBody GymSlotRequest request) {
+		return ResponseEntity.ok(gymSlotService.getSlots(request));
+	}
+
+	@GetMapping("/availability")
+	public ResponseEntity<GymSlot> checkAvailability(@RequestBody GymSlotRequest request) {
+		return ResponseEntity.ok(gymSlotService.checkAvailability(request));
+	}
+
+	@PostMapping
+	public ResponseEntity<GymSlot> createSlot(@RequestBody CreateGymSlotRequest request){
+		return  ResponseEntity.ok(gymSlotService.createSlot(request));
 	}
 
 }

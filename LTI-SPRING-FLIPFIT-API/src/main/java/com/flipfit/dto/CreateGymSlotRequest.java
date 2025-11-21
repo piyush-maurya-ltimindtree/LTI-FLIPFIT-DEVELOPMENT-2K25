@@ -1,23 +1,20 @@
 package com.flipfit.dto;
 
 import com.flipfit.entity.GymSlotStatus;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
-@AllArgsConstructor
-public class GymSlotResponse {
-
-    private Long id;
+@Builder
+public class CreateGymSlotRequest {
     private Long centerId;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
     private Integer capacity;
     private Integer seatsRemaining;
-    private GymSlotStatus status;   // OPEN, FULL, CANCELLED, CLOSED
-
+    private GymSlotStatus status;
 }

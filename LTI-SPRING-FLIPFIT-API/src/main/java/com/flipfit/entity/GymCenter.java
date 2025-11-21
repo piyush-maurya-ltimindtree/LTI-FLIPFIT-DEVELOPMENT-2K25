@@ -7,7 +7,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.List;
 
 @Entity
-@Table(name = "gymcenter", uniqueConstraints = @UniqueConstraint(columnNames = {"gymCenterId", "gymOwnerId"}))
+@Table(
+        uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"gym_center_id", "gym_owner_id"})
+        }
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,6 +35,4 @@ public class GymCenter {
     private Boolean isApproved;
     private Double amountPerSlot;
 
-    @OneToMany(mappedBy = "gymCenter", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<GymSlot> slots;
 }

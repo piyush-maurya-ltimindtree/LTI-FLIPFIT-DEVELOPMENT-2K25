@@ -2,7 +2,9 @@ package com.flipfit.controller;
 
 import com.flipfit.dto.GymCenterRequest;
 import com.flipfit.dto.GymCenterResponse;
-import com.flipfit.dto.GymSlotResponse;
+import com.flipfit.dto.GymSlotRequest;
+import com.flipfit.entity.GymSlot;
+import com.flipfit.entity.GymSlotStatus;
 import com.flipfit.service.GymCenterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,21 +19,9 @@ public class GymCenterController {
 
     private final GymCenterService gymCenterService;
 
-    @GetMapping("/{centerId}/slots")
-    public ResponseEntity<List<GymSlotResponse>> getSlots(@PathVariable Long centerId) {
-        return ResponseEntity.ok(gymCenterService.getSlots(centerId));
-    }
-
-    @GetMapping("/{centerId}/availability")
-    public ResponseEntity<Boolean> checkAvailability(@PathVariable Long centerId,
-                                                     @RequestParam String date,
-                                                     @RequestParam String startTime) {
-        return ResponseEntity.ok(gymCenterService.checkAvailability(centerId, date, startTime));
-    }
-
-    @GetMapping("/city")
-    public ResponseEntity<List<GymCenterResponse>> getCentersByCity(@RequestParam String city) {
-        return ResponseEntity.ok(gymCenterService.getGymCentersByCity(city));
+    @PostMapping
+    public ResponseEntity<GymCenterResponse> createGymCenter(@RequestBody GymCenterRequest request) {
+        return ResponseEntity.ok(gymCenterService.createGymCenter(request));
     }
 
     @PutMapping("/{centerId}/request-approval")
@@ -39,8 +29,9 @@ public class GymCenterController {
         return ResponseEntity.ok(gymCenterService.requestApproval(centerId));
     }
 
-    @PostMapping
-    public ResponseEntity<GymCenterResponse> createGymCenter(@RequestBody GymCenterRequest request) {
-        return ResponseEntity.ok(gymCenterService.createGymCenter(request));
+    @GetMapping
+    public ResponseEntity<List<GymCenterResponse>> getCentersByCity(@RequestParam String city) {
+        return ResponseEntity.ok(gymCenterService.getGymCentersByCity(city));
     }
+
 }

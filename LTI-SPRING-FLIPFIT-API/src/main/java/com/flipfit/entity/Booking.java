@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "bookings", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "slot_id"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "slot_id"}))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +23,7 @@ public class Booking {
 
     private Long userId; // user service reference
 
-    private Long centerId; // denormalized
+    private Long centerId; // reference to GymCenterService
 
     private Long slotId; // reference to SlotService
 

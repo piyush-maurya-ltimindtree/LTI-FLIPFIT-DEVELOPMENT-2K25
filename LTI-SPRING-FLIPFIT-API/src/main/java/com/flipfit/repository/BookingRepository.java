@@ -21,7 +21,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("""
        SELECT b 
        FROM Booking b 
-       JOIN Slot s ON b.slotId = s.id
+       JOIN GymSlot s ON b.slotId = s.id
        WHERE b.userId = :userId 
          AND s.date = :date 
          AND b.status = 'CONFIRMED'
@@ -31,7 +31,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("""
        SELECT b 
        FROM Booking b 
-       JOIN Slot s ON b.slotId = s.id
+       JOIN GymSlot s ON b.slotId = s.id
        WHERE b.userId = :userId
          AND s.date = :date
          AND s.startTime = :startTime

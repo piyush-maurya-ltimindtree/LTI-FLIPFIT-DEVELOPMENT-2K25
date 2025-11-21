@@ -1,6 +1,6 @@
 package com.flipfit.entity;
 
-public enum SlotStatus {
+public enum GymSlotStatus {
     OPEN,
     FULL,
     CANCELLED,

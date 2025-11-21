@@ -1,29 +1,67 @@
 package com.flipfit.entity;
 
+
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "gymslot")
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"center_id", "date", "start_time"})
+        }
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class GymSlot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private Boolean available;
+    // Which center the slot belongs to
+    @Column(name = "center_id", nullable = false)
+    private Long centerId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gym_center_id")
-    private GymCenter gymCenter;
+    // Date of workout (2025-02-01)
+    @Column(nullable = false)
+    private LocalDate date;
+
+    // Start time (e.g., 06:00)
+    @Column(name = "start_time", nullable = false)
+    private LocalTime startTime;
+
+    // End time (e.g., 07:00)
+    @Column(name = "end_time", nullable = false)
+    private LocalTime endTime;
+
+    // Total seats configured by gym owner
+    @Column(nullable = false)
+    private Integer capacity;
+
+    // Real-time seats left
+    @Column(name = "seats_remaining", nullable = false)
+    private Integer seatsRemaining;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private GymSlotStatus status;   // OPEN, FULL, CANCELLED, CLOSED
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 }
+

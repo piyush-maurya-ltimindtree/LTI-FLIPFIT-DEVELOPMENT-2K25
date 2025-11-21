@@ -5,12 +5,10 @@ package com.flipfit.service;
 import com.flipfit.dto.*;
 import com.flipfit.entity.Booking;
 import com.flipfit.entity.BookingStatus;
-import com.flipfit.entity.Slot;
-import com.flipfit.entity.SlotStatus;
+import com.flipfit.entity.GymSlot;
+import com.flipfit.entity.GymSlotStatus;
 import com.flipfit.exception.BookingNotFoundException;
-import com.flipfit.exception.SlotNotFoundException;
 import com.flipfit.repository.BookingRepository;
-import com.flipfit.repository.SlotRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,32 +24,31 @@ import java.util.Optional;
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepo;
-    private final SlotRepository slotRepo;
+    private final GymSlotService gymSlotService;
 
     @Override
     @Transactional
     public BookingResponse bookSlot(BookingRequest request) {
         // 1. load slot with DB row-lock to avoid race conditions
-        Slot slot = slotRepo.findByIdForUpdate(request.getSlotId())
-                .orElseThrow(() -> new SlotNotFoundException("Slot not found"));
+        GymSlot gymSlot = gymSlotService.getSlot(request.getSlotId());
 
         // 2. remove conflicting booking of same date/time for user (requirement #3)
-        removeConflictingBooking(request.getUserId(), slot.getDate(), slot.getStartTime());
+        removeConflictingBooking(request.getUserId(), gymSlot.getDate(), gymSlot.getStartTime());
 
         // 3. verify slot state and seat availability
-        if (slot.getStatus() == SlotStatus.CANCELLED || slot.getStatus() == SlotStatus.CLOSED) {
+        if (gymSlot.getStatus() == GymSlotStatus.CANCELLED || gymSlot.getStatus() == GymSlotStatus.CLOSED) {
             return BookingResponse.failure("Slot is not available");
         }
 
-        if (slot.getSeatsRemaining() > 0) {
+        if (gymSlot.getSeatsRemaining() > 0) {
             // decrement seats and persist
-            slot.setSeatsRemaining(slot.getSeatsRemaining() - 1);
-            slotRepo.save(slot); // within same transaction and lock
+            gymSlot.setSeatsRemaining(gymSlot.getSeatsRemaining() - 1);
+            gymSlotService.updateSlot(gymSlot); // within same transaction and lock
 
             Booking booking = Booking.builder()
                     .userId(request.getUserId())
-                    .slotId(slot.getId())
-                    .centerId(slot.getCenterId())
+                    .slotId(gymSlot.getId())
+                    .centerId(gymSlot.getCenterId())
                     .status(BookingStatus.CONFIRMED)
                     .build();
 
@@ -83,15 +80,14 @@ public class BookingServiceImpl implements BookingService {
         bookingRepo.save(booking);
 
         // unlock a seat: lock slot row
-        Slot slot = slotRepo.findByIdForUpdate(booking.getSlotId())
-                .orElseThrow(() -> new SlotNotFoundException("Slot not found"));
+        GymSlot gymSlot = gymSlotService.getSlot(booking.getSlotId());
 
-        slot.setSeatsRemaining(slot.getSeatsRemaining() + 1);
+        gymSlot.setSeatsRemaining(gymSlot.getSeatsRemaining() + 1);
         // Optionally change status from FULL -> OPEN
-        if (slot.getStatus() == SlotStatus.FULL && slot.getSeatsRemaining() > 0) {
-            slot.setStatus(SlotStatus.OPEN);
+        if (gymSlot.getStatus() == GymSlotStatus.FULL && gymSlot.getSeatsRemaining() > 0) {
+            gymSlot.setStatus(GymSlotStatus.OPEN);
         }
-        slotRepo.save(slot);
+        gymSlotService.updateSlot(gymSlot);
 
         // promote waitlisted user (if any)
 
@@ -99,21 +95,36 @@ public class BookingServiceImpl implements BookingService {
         return CancelBookingResponse.success("Booking cancelled");
     }
 
+    /**
+     * Returns availability info (booked seats,
+     * remaining seats, waitlist count/status)
+     * for a given center, date, and slot time.
+     *
+     * @param centerId
+     * @param date
+     * @param startTime
+     */
     @Override
-    @Transactional(readOnly = true)
     public AvailabilityResponse getAvailability(Long centerId, LocalDate date, LocalTime startTime) {
-        Slot slot = slotRepo.findByCenterIdAndDateAndStartTime(centerId, date, startTime)
-                .orElseThrow(() -> new SlotNotFoundException("Slot not found"));
+
+        GymSlotRequest request = GymSlotRequest.builder()
+                .centerId(centerId)
+                .date(date)
+                .time(startTime)
+                .build();
+
+        GymSlot gymSlot = gymSlotService.checkAvailability(request);
 
 
-        int booked = slot.getCapacity() - slot.getSeatsRemaining();
+        int booked = gymSlot.getCapacity() - gymSlot.getSeatsRemaining();
 
         return AvailabilityResponse.builder()
-                .capacity(slot.getCapacity())
+                .capacity(gymSlot.getCapacity())
                 .booked(booked)
-                .remaining(slot.getSeatsRemaining())
+                .remaining(gymSlot.getSeatsRemaining())
                 .build();
     }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -131,10 +142,10 @@ public class BookingServiceImpl implements BookingService {
             bookingRepo.save(b);
 
             // free seat on the conflicting slot
-            Slot conflictingSlot = slotRepo.findByIdForUpdate(b.getSlotId())
-                    .orElseThrow(() -> new SlotNotFoundException("Slot not found"));
-            conflictingSlot.setSeatsRemaining(conflictingSlot.getSeatsRemaining() + 1);
-            slotRepo.save(conflictingSlot);
+            GymSlot gymSlot = gymSlotService.getSlot(b.getSlotId());
+            GymSlot conflictingGymSlot = gymSlotService.updateSlot(gymSlot);
+            conflictingGymSlot.setSeatsRemaining(conflictingGymSlot.getSeatsRemaining() + 1);
+            gymSlotService.updateSlot(conflictingGymSlot);
 
             // promote waitlist for that slot
 
