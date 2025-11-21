@@ -1,10 +1,12 @@
+
 package com.flipfit.controller;
 
-import com.flipfit.entity.GymUser;
+import com.flipfit.entity.WaitList;
 import com.flipfit.service.WaitListService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/waitlist")
@@ -16,17 +18,19 @@ public class WaitListController {
         this.waitListService = waitListService;
     }
 
-    
-    @PostMapping("/promote")
-    public ResponseEntity<GymUser> promoteUser(@RequestBody GymUser gymUser) {
-        // delegate to the single service
-        GymUser promoted = waitListService.promoteUser(gymUser);
-        return ResponseEntity.ok(promoted);
+    @PostMapping("/add")
+    public ResponseEntity<WaitList> addToWaitList(@RequestBody WaitList waitList) {
+        return ResponseEntity.ok(waitListService.addToWaitList(waitList));
     }
 
-    
-    @GetMapping("/health")
-    public ResponseEntity<String> health() {
-        return ResponseEntity.ok("WaitList service is up");
+    @GetMapping("/slot/{slotId}")
+    public ResponseEntity<List<WaitList>> getWaitListBySlot(@PathVariable Long slotId) {
+        return ResponseEntity.ok(waitListService.getWaitListBySlot(slotId));
+    }
+
+    @DeleteMapping("/remove/{waitListId}")
+    public ResponseEntity<String> removeFromWaitList(@PathVariable Long waitListId) {
+        waitListService.removeFromWaitList(waitListId);
+        return ResponseEntity.ok("Removed from waitlist successfully");
     }
 }
