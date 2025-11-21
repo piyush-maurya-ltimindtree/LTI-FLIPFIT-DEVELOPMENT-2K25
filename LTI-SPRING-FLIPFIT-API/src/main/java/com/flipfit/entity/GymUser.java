@@ -1,44 +1,37 @@
 package com.flipfit.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "gymuser")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class GymUser {
-	
-	private String userName;
-	private String userPassword;
-	private String email;
-	private String phone;
-	private String status;
-	
-	
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public String getUserPassword() {
-		return userPassword;
-	}
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
+
+    @Column(name = "userName", nullable = false, length = 100)
+    private String userName;
+
+    @Column(name = "userPassword", nullable = false, length = 100)
+    private String userPassword;
+
+    @Column(name = "email", unique = true, length = 100)
+    private String email;
+
+    @Column(name = "phone", length = 20)
+    private String phone;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 20)
+    private UserStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false, length = 20)
+    private UserRole role;
 }
