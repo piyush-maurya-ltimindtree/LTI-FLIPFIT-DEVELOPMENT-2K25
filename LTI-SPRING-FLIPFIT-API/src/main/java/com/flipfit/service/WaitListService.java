@@ -1,10 +1,10 @@
 package com.flipfit.service;
 
-
-import com.flipfit.entity.GymUser;
+import com.flipfit.entity.WaitList;
+import java.util.List;
 
 public interface WaitListService {
-	
-	public GymUser promoteUser(GymUser gymUser);
-
+    WaitList addToWaitList(WaitList waitList);
+    List<WaitList> getWaitListBySlot(Long slotId);
+    void removeFromWaitList(Long waitListId);
 }
